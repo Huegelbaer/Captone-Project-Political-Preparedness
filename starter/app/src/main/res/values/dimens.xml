@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="default_padding">8dp</dimen>
-
-    <!-- TODO: Add necessary dimension values -->s
-
+    <dimen name="padding_extra_large">32dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="social_media_icon_size">24dp</dimen>
 </resources>

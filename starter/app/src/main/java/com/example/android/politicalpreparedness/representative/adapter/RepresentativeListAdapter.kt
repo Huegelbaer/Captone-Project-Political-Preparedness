@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.databinding.ViewholderRepresentativeBinding
+import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeListItemBinding
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
@@ -27,7 +27,7 @@ class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewH
     }
 }
 
-class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): RecyclerView.ViewHolder(binding.root) {
+class RepresentativeViewHolder(val binding: FragmentRepresentativeListItemBinding): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Representative) {
         binding.representative = item
@@ -50,7 +50,7 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
     }
 
     private fun showWWWLinks(urls: List<String>) {
-        enableLink(binding.wwwIcon, urls.first())
+        enableLink(binding.websiteIcon, urls.first())
     }
 
     private fun getFacebookUrl(channels: List<Channel>): String? {
@@ -76,8 +76,28 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
         itemView.context.startActivity(intent)
     }
 
+    companion object {
+        fun from(parent: ViewGroup): RepresentativeViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = FragmentRepresentativeListItemBinding.inflate(layoutInflater, parent, false)
+            return RepresentativeViewHolder(binding)
+        }
+    }
 }
 
-//TODO: Create RepresentativeDiffCallback
+class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
+    override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return oldItem.office == newItem.office
+    }
+// TODO
+    override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return  oldItem.office == newItem.office
+    }
 
-//TODO: Create RepresentativeListener
+}
+
+class RepresentativeClickListener {
+    fun onClick(item: Representative) {
+
+    }
+}
