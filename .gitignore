@@ -4,3 +4,5 @@ starter/local.properties
 .idea/
 
 starter/.gradle/
+
+starter/secret.properties

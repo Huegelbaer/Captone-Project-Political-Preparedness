@@ -1,13 +1,13 @@
 package com.example.android.politicalpreparedness.data.remote
 
 import android.content.Context
+import com.example.android.politicalpreparedness.BuildConfig
 import okhttp3.OkHttpClient
 
 class CivicsHttpClient : OkHttpClient() {
 
     companion object {
 
-        const val API_KEY = "" //TODO: Place your API Key Here
 
         fun getClient(context: Context): OkHttpClient {
             return Builder()
@@ -17,7 +17,7 @@ class CivicsHttpClient : OkHttpClient() {
                         .url()
                         .newBuilder()
                         .addQueryParameter("productionDataOnly", "true")
-                        .addQueryParameter("key", API_KEY)
+                        .addQueryParameter("key", BuildConfig.API_KEY)
                         .build()
                     val request = original
                         .newBuilder()
