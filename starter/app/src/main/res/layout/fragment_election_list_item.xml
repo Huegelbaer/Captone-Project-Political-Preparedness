@@ -6,11 +6,11 @@
 
 <variable
     name="election"
-    type="com.example.android.politicalpreparedness.network.models.Election" />
+    type="com.example.android.politicalpreparedness.domain.models.Election" />
 
 <variable
     name="clickListener"
-    type="com.example.android.politicalpreparedness.election.adapter.ElectionClickListener" />
+    type="com.example.android.politicalpreparedness.presentation.election.adapter.ElectionClickListener" />
 </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

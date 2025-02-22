@@ -5,13 +5,16 @@
     <data>
 
         <variable
-            name="representative"
-            type="com.example.android.politicalpreparedness.representative.model.Representative" />
+            name="office"
+            type="com.example.android.politicalpreparedness.domain.models.Office" />
 
+        <variable
+            name="official"
+            type="com.example.android.politicalpreparedness.domain.models.Official" />
 
         <variable
             name="clickListener"
-            type="com.example.android.politicalpreparedness.representative.adapter.RepresentativeClickListener" />
+            type="com.example.android.politicalpreparedness.presentation.representative.adapter.RepresentativeClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +33,7 @@
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{representative.office.name}"
+            android:text="@{office.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/representativePhoto"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +42,7 @@
             android:id="@+id/division"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{representative.office.division.toString()}"
+            android:text="@{office.division.toString()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/representativePhoto"
@@ -60,7 +63,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/twitter_icon"
             app:srcCompat="@drawable/ic_facebook" />
-
 
         <ImageView
             android:id="@+id/twitter_icon"
