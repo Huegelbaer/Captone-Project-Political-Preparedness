@@ -3,7 +3,6 @@ package com.example.android.politicalpreparedness.data.repository
 import com.example.android.politicalpreparedness.data.ElectionDataSource
 import com.example.android.politicalpreparedness.data.local.ElectionDao
 import com.example.android.politicalpreparedness.data.local.entities.ElectionEntity
-import com.example.android.politicalpreparedness.data.remote.CivicsApi
 import com.example.android.politicalpreparedness.data.remote.CivicsApiService
 import com.example.android.politicalpreparedness.domain.models.Election
 import com.example.android.politicalpreparedness.domain.models.Representative
@@ -14,19 +13,20 @@ class ElectionRepository(
     private val apiService: CivicsApiService
 ) : ElectionDataSource {
 
-    override suspend fun getElections(): List<Election> =  apiService.getElections().elections.map { it.toModel() }
+    override suspend fun getElections(): List<Election> =
+        apiService.getElections().elections.map { it.toModel() }
 
     override suspend fun getVoterInfo(
         id: Int,
         address: String
     ): VoterInfo {
-        return CivicsApi.retrofitService.getVoterInfo(address, id).toModel()
+        return apiService.getVoterInfo(address, id).toModel()
     }
 
     override suspend fun getRepresentatives(
         address: String
     ): Representative {
-        return CivicsApi.retrofitService.getRepresentatives(address).toModel()
+        return apiService.getRepresentatives(address).toModel()
     }
 
     override suspend fun saveElection(election: Election) =

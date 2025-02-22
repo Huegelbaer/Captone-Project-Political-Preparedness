@@ -4,6 +4,7 @@ import com.example.android.politicalpreparedness.domain.models.Election
 import com.squareup.moshi.*
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 data class ElectionDTO(
         val id: Int,
         val name: String,

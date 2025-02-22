@@ -4,7 +4,7 @@ import com.example.android.politicalpreparedness.data.remote.dtos.DivisionDTO
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 
-class ElectionAdapter {
+class ElectionDivisionAdapter {
     @FromJson
     fun divisionFromJson (ocdDivisionId: String): DivisionDTO {
         val countryDelimiter = "country:"

@@ -13,6 +13,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
+import timber.log.Timber
 
 class MainApplication : Application() {
 
@@ -23,7 +24,7 @@ class MainApplication : Application() {
             viewModel {
                 ElectionsViewModel(get())
             }
-            single { CivicsApi.retrofitService }
+            single { CivicsApi(applicationContext).retrofitService }
             single { Dispatchers.IO }
             single { ElectionDatabase.getInstance(this@MainApplication).electionDao as ElectionDao }
             single {
@@ -35,6 +36,10 @@ class MainApplication : Application() {
             androidLogger()
             androidContext(this@MainApplication)
             modules(appModule)
+        }
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
         }
     }
 }

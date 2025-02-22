@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.data.ElectionDataSource
 import com.example.android.politicalpreparedness.domain.models.Election
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class ElectionsViewModel(
-    private val electionRepository: ElectionDataSource
+    private val repository: ElectionDataSource
 ): ViewModel() {
 
     private var _isLoading = MutableLiveData(false)
@@ -29,21 +32,47 @@ class ElectionsViewModel(
 
     //TODO: Create functions to navigate to saved or upcoming election voter info
 
-    init {
+    fun refresh() {
         getElections()
     }
 
     private fun getElections() {
         _isLoading.value = true
-        viewModelScope.launch {
+        loadElections()
+        loadSavedElections()
+    }
+
+    private fun loadElections() {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                _upcomingElections.value = electionRepository.getElections()
-                _savedElections.value = electionRepository.getSavedElections()
+                val result = repository.getElections()
+                withContext(Dispatchers.Main) {
+                    _upcomingElections.value = result
+                }
             } catch (e: Exception) {
+                e.message?.let {Timber.tag("network error").e(it)}
                 e.localizedMessage?.let { Timber.tag("network error").e(it) }
-              //  _errorMessage.value = R.string.error_message
+                //  _errorMessage.value = R.string.error_message
+            } finally {
+                Timber.tag("loading data finished!")
             }
-            _isLoading.postValue(false)
+        }
+    }
+
+    private fun loadSavedElections() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = repository.getSavedElections()
+                withContext(Dispatchers.Main) {
+                    _savedElections.value = result
+                }
+            } catch (e: Exception) {
+                e.localizedMessage?.let { Timber.tag("database error").e(it) }
+                //  _errorMessage.value = R.string.error_message
+            } finally {
+                Timber.tag("loading saved data finished!")
+            }
+//            _isLoading.postValue(false)
         }
     }
 

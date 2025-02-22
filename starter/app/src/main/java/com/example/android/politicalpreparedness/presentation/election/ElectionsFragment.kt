@@ -5,70 +5,62 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
-import com.example.android.politicalpreparedness.data.ElectionDataSource
+import com.example.android.politicalpreparedness.domain.models.Election
 import com.example.android.politicalpreparedness.presentation.election.adapter.ElectionClickListener
 import com.example.android.politicalpreparedness.presentation.election.adapter.ElectionListAdapter
-import org.koin.android.ext.android.inject
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ElectionsFragment: Fragment() {
+class ElectionsFragment : Fragment() {
 
-    private lateinit var _viewModel: ElectionsViewModel
+    private val _viewModel: ElectionsViewModel by viewModel()
     private lateinit var _binding: FragmentElectionBinding
-    private lateinit var _upcomingAdapter: ElectionListAdapter
-    private lateinit var _savedAdapter: ElectionListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?)
-    : View? {
+        savedInstanceState: Bundle?
+    ): View {
 
         _binding = FragmentElectionBinding.inflate(inflater)
-
-        val dataSource: ElectionDataSource by inject()
-        _viewModel = ElectionsViewModel(dataSource)
+        _binding.viewModel = _viewModel
+        _binding.lifecycleOwner = viewLifecycleOwner
 
         val upcomingClickListener = ElectionClickListener {
             _viewModel.onItemSelected(it)
         }
-        _upcomingAdapter = ElectionListAdapter(upcomingClickListener)
 
         _binding.upcomingElectionsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = _upcomingAdapter
+            adapter = ElectionListAdapter(upcomingClickListener)
         }
 
         val savedClickListener = ElectionClickListener {
             _viewModel.onItemSelected(it)
         }
-        _savedAdapter = ElectionListAdapter(savedClickListener)
 
         _binding.savedElectionsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = _savedAdapter
+            adapter = ElectionListAdapter(savedClickListener)
         }
-
-        setupViewModelObservers()
 
         // TODO: Add binding values
 
         // TODO: Link elections to voter info
 
-        // TODO: Populate recycler adapters
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                _viewModel.refresh()
+            }
+        }
 
         return _binding.root
-    }
-
-    private fun setupViewModelObservers() {
-        _viewModel.upcomingElections.observe(viewLifecycleOwner) {
-            _upcomingAdapter.submitList(it)
-        }
-
-        _viewModel.savedElections.observe(viewLifecycleOwner) {
-            _savedAdapter.submitList(it)
-        }
     }
 
     // TODO: Refresh adapters when fragment loads
