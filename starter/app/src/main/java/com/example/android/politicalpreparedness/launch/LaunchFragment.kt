@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentLaunchBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
-import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.election.adapter.ElectionClickListener
 
 class LaunchFragment : Fragment() {
 
@@ -19,8 +19,8 @@ class LaunchFragment : Fragment() {
         val binding = FragmentLaunchBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        binding.representativeButton.setOnClickListener { navToRepresentatives() }
-        binding.upcomingButton.setOnClickListener { navToElections() }
+        binding.representativesButton.setOnClickListener { navToRepresentatives() }
+        binding.upcomingElectionsButton.setOnClickListener { navToElections() }
 
         return binding.root
     }
