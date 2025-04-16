@@ -7,7 +7,9 @@ import java.util.Date
 import java.util.Locale
 
 @BindingAdapter("usDate")
-fun bindTextViewToDate(textView: TextView, date: Date) {
-    val format = DateFormat.getDateInstance(DateFormat.FULL, Locale.US)
-    textView.text = format.format(date)
+fun bindTextViewToDate(textView: TextView, date: Date?) {
+    textView.text = date?.let {
+        val format = DateFormat.getDateInstance(DateFormat.FULL, Locale.US)
+        format.format(it)
+    } ?: ""
 }

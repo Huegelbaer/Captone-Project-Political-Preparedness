@@ -2,5 +2,11 @@ package com.example.android.politicalpreparedness.domain.models
 
 data class VoterInfo(
     val election: Election,
-    val state: List<State>? = null,
-)
+    val pollingLocations: String?,
+    val contests: String?,
+    val state: List<State>?,
+    val officials: List<ElectionOfficial>?
+) {
+ val administration: Administration?
+     get() = state?.firstOrNull()?.electionAdministration
+}

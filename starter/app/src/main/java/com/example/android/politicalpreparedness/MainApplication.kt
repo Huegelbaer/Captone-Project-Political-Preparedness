@@ -6,7 +6,9 @@ import com.example.android.politicalpreparedness.data.local.ElectionDao
 import com.example.android.politicalpreparedness.data.local.ElectionDatabase
 import com.example.android.politicalpreparedness.data.remote.CivicsApi
 import com.example.android.politicalpreparedness.data.repository.ElectionRepository
+import com.example.android.politicalpreparedness.domain.models.Election
 import com.example.android.politicalpreparedness.presentation.election.ElectionsViewModel
+import com.example.android.politicalpreparedness.presentation.election.VoterInfoViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -21,6 +23,9 @@ class MainApplication : Application() {
         super.onCreate()
 
         val appModule = module {
+            viewModel { (election: Election) ->
+                VoterInfoViewModel(get(), election)
+            }
             viewModel {
                 ElectionsViewModel(get())
             }

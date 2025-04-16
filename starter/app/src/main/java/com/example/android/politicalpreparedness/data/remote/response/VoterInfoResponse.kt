@@ -15,6 +15,11 @@ class VoterInfoResponse(
     val electionElectionOfficials: List<ElectionOfficialDTO>? = null
 ) {
     fun toModel(): VoterInfo {
-        return VoterInfo(election.toModel(), state?.map { it.toModel() })
+        return VoterInfo(
+            election.toModel(),
+            pollingLocations,
+            contests,
+            state?.map { it.toModel() },
+            electionElectionOfficials?.map { it.toModel() })
     }
 }

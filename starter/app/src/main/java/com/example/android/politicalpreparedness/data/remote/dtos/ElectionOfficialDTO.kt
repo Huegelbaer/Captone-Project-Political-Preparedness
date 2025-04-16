@@ -1,5 +1,6 @@
 package com.example.android.politicalpreparedness.data.remote.dtos
 
+import com.example.android.politicalpreparedness.domain.models.ElectionOfficial
 import com.squareup.moshi.Json
 
 data class ElectionOfficialDTO(
@@ -8,4 +9,8 @@ data class ElectionOfficialDTO(
     @Json(name="officePhoneNumber") val phone: String,
     @Json(name="faxNumber") val fax: String,
     val emailAddress: String
-)
+) {
+    fun toModel(): ElectionOfficial {
+        return ElectionOfficial(name, title, phone, fax, emailAddress)
+    }
+}
