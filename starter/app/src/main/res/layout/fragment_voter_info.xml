@@ -104,8 +104,13 @@
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_save"
-            android:contentDescription="@string/save_election" />
+            android:onClick="@{() -> viewModel.toggleSaveState()}"
+            app:isFavorite="@{viewModel.isElectionSaved}"
+            app:favoriteIcon="@{@drawable/favorite_on}"
+            app:favoriteNotIcon="@{@drawable/favorite_off}"
+            app:favoriteDescription="@{@string/save_election}"
+            app:favoriteNotDescription="@{@string/remove_election}" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

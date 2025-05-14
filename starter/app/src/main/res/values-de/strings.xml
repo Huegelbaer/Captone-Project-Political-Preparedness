@@ -3,4 +3,6 @@
     <string name="app_name">Politische Bereitschaft</string>
     <string name="save_election">Speichern</string>
     <string name="remove_election">Entfernen</string>
+    <string name="save_election_failed">Die Wahl konnte nicht gespeichert werden.</string>
+    <string name="remove_election_failed">Die Wahl konnte nicht entfernt werden.</string>
 </resources>

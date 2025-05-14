@@ -26,8 +26,8 @@ class VoterInfoViewModel(private val repository: ElectionDataSource, val electio
     val isElectionSaved:  LiveData<Boolean>
         get() = _isElectionSaved
 
-    private val _message = MutableLiveData<String>()
-    val message:  LiveData<String>
+    private val _message = MutableLiveData<Int>()
+    val message:  LiveData<Int>
         get() = _message
 
     init {
@@ -53,10 +53,13 @@ class VoterInfoViewModel(private val repository: ElectionDataSource, val electio
     //TODO: Add var and methods to support loading URLs
     }
 
-    //TODO: Add var and methods to save and remove elections to local database
     //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
 
-    suspend fun saveElection() {
+    fun toggleSaveState() {
+        if (_isElectionSaved.value == true) deleteElection() else saveElection()
+    }
+
+    private fun saveElection() {
         viewModelScope.launch(Dispatchers.IO) {
             val succeeded = repository.saveElection(election)
             withContext(Dispatchers.Main) {
@@ -69,7 +72,7 @@ class VoterInfoViewModel(private val repository: ElectionDataSource, val electio
         }
     }
 
-    suspend fun deleteElection() {
+    private fun deleteElection() {
         viewModelScope.launch(Dispatchers.IO) {
             val succeeded =  repository.removeElectionById(election.id)
             withContext(Dispatchers.Main) {

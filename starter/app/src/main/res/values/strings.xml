@@ -3,7 +3,6 @@
     <string name="app_name">Political Preparedness</string>
     <string name="save_election">Save</string>
     <string name="remove_election">Remove</string>
-
-    <!-- TODO: Add necessary string values -->
-
+    <string name="save_election_failed">Could not save election.</string>
+    <string name="remove_election_failed">Could not remove election.</string>
 </resources>

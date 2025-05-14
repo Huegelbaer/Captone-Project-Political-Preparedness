@@ -42,24 +42,9 @@ class VoterInfoFragment : Fragment() {
 
         // TODO: Handle loading of URLs
 
-        _viewModel.isElectionSaved.observe(viewLifecycleOwner) { isSaved ->
-            if (isSaved) {
-                _binding.saveButton.apply {
-                    setImageResource(android.R.drawable.ic_menu_delete)
-                    contentDescription = resources.getText(R.string.remove_election)
-                    setOnClickListener { lifecycleScope.launch { _viewModel.deleteElection() } }
-                }
-            } else {
-                _binding.saveButton.apply {
-                    setImageResource(android.R.drawable.ic_menu_save)
-                    contentDescription = resources.getText(R.string.save_election)
-                    setOnClickListener { lifecycleScope.launch { _viewModel.saveElection() } }
-                }
-            }
-        }
-
-        _viewModel.message.observe(viewLifecycleOwner) { message ->
-            showSnackbar(message)
+        _viewModel.message.observe(viewLifecycleOwner) { id ->
+            val message = resources.getText(id)
+            showSnackbar(message.toString())
         }
 
         return _binding.root
