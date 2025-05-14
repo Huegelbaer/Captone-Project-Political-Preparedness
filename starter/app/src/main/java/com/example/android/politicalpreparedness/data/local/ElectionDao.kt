@@ -9,7 +9,7 @@ import com.example.android.politicalpreparedness.data.local.entities.ElectionEnt
 interface ElectionDao {
 
     @Insert
-    fun insert(election: ElectionEntity)
+    fun insert(election: ElectionEntity): Long
 
     @Query("SELECT * FROM election_table")
     fun getAll(): List<ElectionEntity>
@@ -18,8 +18,8 @@ interface ElectionDao {
     fun getById(id: Int): ElectionEntity?
 
     @Query("DELETE FROM election_table WHERE id = :id")
-    fun deleteById(id: Int)
+    fun deleteById(id: Int): Int
 
     @Query("DELETE FROM election_table")
-    fun clear()
+    fun clear(): Int
 }

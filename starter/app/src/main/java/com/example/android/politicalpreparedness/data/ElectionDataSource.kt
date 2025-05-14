@@ -8,9 +8,9 @@ interface ElectionDataSource {
     suspend fun getElections(): List<Election>
     suspend fun getVoterInfo(id: Int, address: String): VoterInfo
     suspend fun getRepresentatives(address: String): Representative
-    suspend fun saveElection(election: Election)
+    suspend fun saveElection(election: Election): Boolean
     suspend fun getSavedElections(): List<Election>
     suspend fun getSavedElectionById(id: Int): Election?
-    suspend fun removeAllSavedElections()
-    suspend fun removeElectionById(id: Int)
+    suspend fun removeAllSavedElections(): Boolean
+    suspend fun removeElectionById(id: Int): Boolean
 }

@@ -29,9 +29,10 @@ class ElectionRepository(
         return apiService.getRepresentatives(address).toModel()
     }
 
-    override suspend fun saveElection(election: Election) =
-        electionDao.insert(ElectionEntity.fromModel(election))
-
+    override suspend fun saveElection(election: Election): Boolean {
+        val id = electionDao.insert(ElectionEntity.fromModel(election))
+        return id > 0
+    }
 
     override suspend fun getSavedElections(): List<Election> =
         electionDao.getAll().map { it.toModel() }
@@ -41,11 +42,14 @@ class ElectionRepository(
         electionDao.getById(id)?.toModel()
 
 
-    override suspend fun removeAllSavedElections() =
-        electionDao.clear()
+    override suspend fun removeAllSavedElections(): Boolean {
+        val countDeletedRows = electionDao.clear()
+        return countDeletedRows > 0
+    }
 
 
-    override suspend fun removeElectionById(id: Int) =
-        electionDao.deleteById(id)
-
+    override suspend fun removeElectionById(id: Int): Boolean {
+        val countDeletedRows = electionDao.deleteById(id)
+        return countDeletedRows == 1
+    }
 }

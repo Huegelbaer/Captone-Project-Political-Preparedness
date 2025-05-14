@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Politische Bereitschaft</string>
+    <string name="save_election">Speichern</string>
+    <string name="remove_election">Entfernen</string>
+</resources>

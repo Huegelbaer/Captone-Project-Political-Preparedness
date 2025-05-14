@@ -1,28 +1,20 @@
 package com.example.android.politicalpreparedness.presentation.election
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.location.Geocoder
-import android.location.Location
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresPermission
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
-import java.util.Locale
 
 class VoterInfoFragment : Fragment() {
 
@@ -50,10 +42,33 @@ class VoterInfoFragment : Fragment() {
 
         // TODO: Handle loading of URLs
 
-        // TODO: Handle save button UI state
-        // TODO: cont'd Handle save button clicks
-        
+        _viewModel.isElectionSaved.observe(viewLifecycleOwner) { isSaved ->
+            if (isSaved) {
+                _binding.saveButton.apply {
+                    setImageResource(android.R.drawable.ic_menu_delete)
+                    contentDescription = resources.getText(R.string.remove_election)
+                    setOnClickListener { lifecycleScope.launch { _viewModel.deleteElection() } }
+                }
+            } else {
+                _binding.saveButton.apply {
+                    setImageResource(android.R.drawable.ic_menu_save)
+                    contentDescription = resources.getText(R.string.save_election)
+                    setOnClickListener { lifecycleScope.launch { _viewModel.saveElection() } }
+                }
+            }
+        }
+
+        _viewModel.message.observe(viewLifecycleOwner) { message ->
+            showSnackbar(message)
+        }
+
         return _binding.root
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar
+            .make(requireView(), message, Snackbar.LENGTH_LONG)
+            .show()
     }
 
     // TODO: Create method to load URL intents
