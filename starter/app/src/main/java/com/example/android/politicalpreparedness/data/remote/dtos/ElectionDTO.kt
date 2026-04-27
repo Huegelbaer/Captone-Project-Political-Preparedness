@@ -9,7 +9,7 @@ data class ElectionDTO(
         val id: Int,
         val name: String,
         val electionDay: Date,
-        @Json(name="ocdDivisionId") val division: DivisionDTO
+        @param:Json(name="ocdDivisionId") val division: DivisionDTO
 ) {
     fun toModel(): Election {
         return Election(id, name, electionDay, division.toModel())

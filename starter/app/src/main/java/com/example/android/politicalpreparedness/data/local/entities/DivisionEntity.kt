@@ -2,7 +2,7 @@ package com.example.android.politicalpreparedness.data.local.entities
 
 import android.os.Parcelable
 import com.example.android.politicalpreparedness.domain.models.Division
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DivisionEntity(

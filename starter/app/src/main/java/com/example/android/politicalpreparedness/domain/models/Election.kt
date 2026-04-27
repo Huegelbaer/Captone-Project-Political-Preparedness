@@ -2,7 +2,7 @@ package com.example.android.politicalpreparedness.domain.models
 
 import java.util.Date
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Election(

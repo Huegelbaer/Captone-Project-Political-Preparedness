@@ -12,8 +12,8 @@ import com.example.android.politicalpreparedness.presentation.election.VoterInfo
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import timber.log.Timber
 
@@ -31,10 +31,8 @@ class MainApplication : Application() {
             }
             single { CivicsApi(applicationContext).retrofitService }
             single { Dispatchers.IO }
-            single { ElectionDatabase.getInstance(this@MainApplication).electionDao as ElectionDao }
-            single {
-                ElectionRepository(get(), get()) as ElectionDataSource
-            }
+            single<ElectionDao> { ElectionDatabase.getInstance(this@MainApplication).electionDao }
+            single<ElectionDataSource> { ElectionRepository(get(), get()) }
         }
 
         startKoin {

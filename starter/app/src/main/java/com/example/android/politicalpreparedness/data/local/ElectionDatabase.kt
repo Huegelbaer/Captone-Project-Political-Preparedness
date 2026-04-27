@@ -27,7 +27,7 @@ abstract class ElectionDatabase: RoomDatabase() {
                             ElectionDatabase::class.java,
                             "election_database"
                     )
-                            .fallbackToDestructiveMigration()
+                            .fallbackToDestructiveMigration(true)
                             .build()
 
                     INSTANCE = instance
