@@ -14,7 +14,7 @@ class CivicsHttpClient : OkHttpClient() {
                 .addInterceptor { chain ->
                     val original = chain.request()
                     val url = original
-                        .url()
+                        .url
                         .newBuilder()
                         .addQueryParameter("productionDataOnly", "true")
                         .addQueryParameter("key", BuildConfig.API_KEY)
